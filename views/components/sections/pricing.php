@@ -256,15 +256,22 @@ function selectOption(optionId, scoreWeight) {
 }
 
 function showLeadForm() {
-    // Calculate plan first
+    // Calculate plan with weights (Duration has weight 3, others weight 1)
     let totalScore = 0;
-    Object.values(answers).forEach(a => totalScore += a.score);
-    const avgScore = totalScore / Object.keys(answers).length;
+    let totalWeight = 0;
+    
+    Object.keys(answers).forEach(index => {
+        let weight = (parseInt(index) === 1) ? 3 : 1; 
+        totalScore += (answers[index].score * weight);
+        totalWeight += weight;
+    });
+    
+    const avgScore = totalScore / totalWeight;
     
     let recommendedPlanId = 'A';
-    if (avgScore > 2.2) {
+    if (avgScore > 2.6) {
         recommendedPlanId = 'C';
-    } else if (avgScore > 1.5) {
+    } else if (avgScore > 1.7) {
         recommendedPlanId = 'B';
     }
     
