@@ -9,7 +9,7 @@ $pageHeading = 'Gestão de Leads';
 
 // Buscar leads
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $leads = $pdo->query("SELECT * FROM leads ORDER BY created_at DESC")->fetchAll();
     
     // Buscar perguntas e opções do quiz para mapear respostas

@@ -7,7 +7,7 @@ $pageTitle = 'Configurações - Admin MEMORA MOVIE';
 $pageHeading = 'Configurações';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $stmt = $pdo->query("SELECT * FROM settings");
     $rows = $stmt->fetchAll();
     $settings = [];

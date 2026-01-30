@@ -8,7 +8,7 @@ $pageHeading = 'Dashboard';
 
 // Buscar estatísticas
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     
     // Total de leads
     $totalLeads = $pdo->query("SELECT COUNT(*) FROM leads")->fetchColumn();

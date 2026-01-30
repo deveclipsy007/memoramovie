@@ -8,7 +8,7 @@ $pageTitle = 'Quiz - Admin MEMORA MOVIE';
 $pageHeading = 'Gerenciar Quiz';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     
     // Buscar perguntas com suas opções
     $stmt = $pdo->query("SELECT * FROM quiz_questions ORDER BY display_order ASC, id ASC");

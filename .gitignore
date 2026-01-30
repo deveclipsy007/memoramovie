@@ -10,6 +10,8 @@ composer.lock
 .env
 .env.local
 .env.*.local
+api/config.php
+api/config.sqlite.php
 
 # IDE
 .idea/

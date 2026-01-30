@@ -4,6 +4,9 @@
  * Layout base para páginas do painel admin
  */
 
+require_once __DIR__ . '/../../api/db.php';
+$dbStatus = getDbStatus();
+
 session_start();
 
 // Verificar autenticação (exceto na página de login)
@@ -107,15 +110,30 @@ $icons = [
             
             <!-- User & Logout -->
             <div class="p-4 border-t border-white/10">
-                <div class="flex items-center gap-3 mb-4">
+                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-4">
                     <div class="w-10 h-10 rounded-full bg-memora-wine flex items-center justify-center text-white font-bold">
                         <?= substr($adminUser, 0, 1) ?>
                     </div>
                     <div>
-                        <div class="text-sm font-medium"><?= htmlspecialchars($adminUser) ?></div>
-                        <div class="text-xs text-white/50">Administrador</div>
+                        <div class="text-sm font-medium text-white/90"><?= htmlspecialchars($adminUser) ?></div>
+                        <div class="text-xs text-white/40 uppercase tracking-wider font-semibold">Administrador</div>
                     </div>
                 </div>
+
+                <!-- Database Status Badge -->
+                <div class="mb-6">
+                    <div class="flex items-center gap-3 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10">
+                        <div class="relative flex h-2 w-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full <?= $dbStatus['color'] ?> opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 <?= $dbStatus['color'] ?>"></span>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-[9px] uppercase tracking-widest text-white/30 font-bold leading-none mb-1">Status do Banco</div>
+                            <div class="text-[11px] font-medium text-white/80 leading-none"><?= $dbStatus['label'] ?></div>
+                        </div>
+                    </div>
+                </div>
+
                 <a href="/admin?logout=1" 
                    class="flex items-center gap-2 text-white/70 hover:text-white text-sm transition-colors">
                     <?= $icons['logout'] ?>

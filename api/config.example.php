@@ -10,6 +10,10 @@ $db_host = 'SEU_HOST_AQUI'; // Geralmente 'localhost' na Hostinger
 $db_name = 'SEU_NOME_DO_BANCO_AQUI';
 $db_user = 'SEU_USUARIO_AQUI';
 $db_pass = 'SUA_SENHA_AQUI';
+$db_type = 'mysql';
+
+define('DB_TYPE', 'mysql');
+define('DB_NAME', $db_name);
 
 try {
     $pdo = new PDO("mysql:host=$db_host;dbname=$db_name;charset=utf8mb4", $db_user, $db_pass, [

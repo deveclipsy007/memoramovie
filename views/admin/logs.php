@@ -7,7 +7,7 @@ $pageTitle = 'Logs - Admin MEMORA MOVIE';
 $pageHeading = 'Logs do Sistema';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $logs = $pdo->query("SELECT * FROM logs ORDER BY created_at DESC LIMIT 100")->fetchAll();
 } catch (Exception $e) {
     $logs = [];

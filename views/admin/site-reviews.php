@@ -7,7 +7,7 @@ $pageTitle = 'Depoimentos - Admin MEMORA MOVIE';
 $pageHeading = 'Gerenciar Depoimentos';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $reviews = $pdo->query("SELECT * FROM site_reviews ORDER BY display_order")->fetchAll();
 } catch (Exception $e) {
     $reviews = [];

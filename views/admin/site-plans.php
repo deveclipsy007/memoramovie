@@ -7,7 +7,7 @@ $pageTitle = 'Planos - Admin MEMORA MOVIE';
 $pageHeading = 'Gerenciar Planos';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $plans = $pdo->query("SELECT * FROM plans ORDER BY id")->fetchAll();
 } catch (Exception $e) {
     $plans = [];

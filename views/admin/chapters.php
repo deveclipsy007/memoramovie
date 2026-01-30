@@ -9,7 +9,7 @@ $pageHeading = 'Gerenciar Capítulos';
 
 // Buscar capítulos
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $chapters = $pdo->query("SELECT * FROM chapters ORDER BY display_order")->fetchAll();
 } catch (Exception $e) {
     $chapters = [];

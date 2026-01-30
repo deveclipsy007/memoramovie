@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     
     try {
-        require_once __DIR__ . '/../../api/config.sqlite.php';
+        require_once __DIR__ . '/../../api/db.php';
         
         $stmt = $pdo->prepare("SELECT * FROM admins WHERE username = ?");
         $stmt->execute([$username]);

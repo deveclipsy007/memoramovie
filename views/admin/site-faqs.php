@@ -7,7 +7,7 @@ $pageTitle = 'FAQs - Admin MEMORA MOVIE';
 $pageHeading = 'Gerenciar FAQs';
 
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $faqs = $pdo->query("SELECT * FROM site_faqs ORDER BY display_order")->fetchAll();
 } catch (Exception $e) {
     $faqs = [];
