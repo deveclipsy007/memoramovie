@@ -11,25 +11,26 @@ try {
     $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
     // Buscar perguntas do quiz
-    $stmtQuiz = $pdo->query("SELECT q.*, GROUP_CONCAT(o.id || '|' || o.label || '|' || o.score_weight, ';;') as options_str 
-                             FROM quiz_questions q 
-                             LEFT JOIN quiz_options o ON q.id = o.question_id 
-                             GROUP BY q.id 
-                             ORDER BY q.display_order");
+    $stmtQuiz = $pdo->query("SELECT * FROM quiz_questions ORDER BY display_order");
     $quizData = $stmtQuiz->fetchAll(PDO::FETCH_ASSOC);
     
     // Formatar para JSON
     $quizQuestions = [];
     foreach ($quizData as $q) {
+        // Buscar opções para esta pergunta
+        $stmtOptions = $pdo->prepare("SELECT id, label, score_weight FROM quiz_options WHERE question_id = ?");
+        $stmtOptions->execute([$q['id']]);
+        $optionsData = $stmtOptions->fetchAll(PDO::FETCH_ASSOC);
+        
         $options = [];
-        if ($q['options_str']) {
-            foreach (explode(';;', $q['options_str']) as $opt) {
-                $parts = explode('|', $opt);
-                if (count($parts) === 3) {
-                    $options[] = ['id' => $parts[0], 'label' => $parts[1], 'scoreWeight' => (int)$parts[2]];
-                }
-            }
+        foreach ($optionsData as $opt) {
+            $options[] = [
+                'id' => $opt['id'],
+                'label' => $opt['label'],
+                'scoreWeight' => (int)$opt['score_weight']
+            ];
         }
+
         $quizQuestions[] = [
             'id' => $q['id'],
             'question' => $q['question'],
