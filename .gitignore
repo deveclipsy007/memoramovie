@@ -1,0 +1,33 @@
+# Dependências e cache
+/vendor/
+composer.lock
+
+# Banco de dados local
+/storage/*.sqlite
+/storage/database.sqlite
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+/logs/
+
+# Uploads temporários
+/uploads/temp/
+
+# Build (se usar Tailwind CLI)
+/public/assets/css/output.css
