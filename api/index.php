@@ -3,7 +3,7 @@
  * Router Principal - Memora Movie API
  */
 
-require_once 'config.php';
+require_once 'db.php';
 require_once 'helpers.php';
 
 // Carregar Controllers

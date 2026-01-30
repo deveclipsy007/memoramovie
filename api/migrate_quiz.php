@@ -4,7 +4,7 @@
  * Acesse este arquivo uma vez pelo navegador para criar as tabelas
  */
 
-require_once 'config.sqlite.php';
+require_once 'db.php';
 
 try {
     // Criar tabela de perguntas

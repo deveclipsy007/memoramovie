@@ -6,7 +6,7 @@ echo "=== DEBUG API ===\n\n";
 
 echo "1. Testando config.sqlite.php...\n";
 try {
-    require_once 'config.sqlite.php';
+    require_once 'db.php';
     echo "✓ Config carregado\n";
     echo "✓ PDO conectado\n\n";
 } catch (Exception $e) {

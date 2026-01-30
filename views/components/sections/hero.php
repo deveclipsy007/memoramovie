@@ -6,7 +6,7 @@
 
 // Buscar capítulos do banco para usar as imagens das categorias
 try {
-    require_once __DIR__ . '/../../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../../api/db.php';
     $stmt = $pdo->query("SELECT image_url FROM chapters WHERE image_url IS NOT NULL AND image_url != '' ORDER BY display_order");
     $chaptersWithImages = $stmt->fetchAll();
     

@@ -4,7 +4,7 @@
  * Acesse este arquivo uma vez pelo navegador
  */
 
-require_once 'config.sqlite.php';
+require_once 'db.php';
 
 try {
     // Tabela de conteúdos gerais

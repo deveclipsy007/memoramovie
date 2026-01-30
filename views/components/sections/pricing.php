@@ -6,7 +6,7 @@
 
 // Buscar planos do banco
 try {
-    require_once __DIR__ . '/../../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../../api/db.php';
     $stmt = $pdo->query("SELECT * FROM plans ORDER BY id");
     $plans = $stmt->fetchAll(PDO::FETCH_ASSOC);
     

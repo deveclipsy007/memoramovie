@@ -8,7 +8,7 @@ $chapterId = $_GET['id'] ?? 'love';
 
 // Buscar dados do capítulo
 try {
-    require_once __DIR__ . '/../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../api/db.php';
     $stmt = $pdo->prepare("SELECT * FROM chapters WHERE id = ?");
     $stmt->execute([$chapterId]);
     $chapter = $stmt->fetch();

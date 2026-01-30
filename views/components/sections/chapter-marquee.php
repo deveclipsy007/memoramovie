@@ -6,7 +6,7 @@
 
 // Buscar capítulos do banco ou usar defaults
 try {
-    require_once __DIR__ . '/../../../api/config.sqlite.php';
+    require_once __DIR__ . '/../../../api/db.php';
     $stmt = $pdo->query("SELECT * FROM chapters ORDER BY display_order");
     $chapters = $stmt->fetchAll();
 } catch (Exception $e) {
