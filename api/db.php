@@ -5,23 +5,46 @@
  */
 
 // Tenta carregar a configuração do MySQL por padrão
-$configPath = __DIR__ . '/config.php';
+$mysqlConfig = __DIR__ . '/config.php';
+$sqliteConfig = __DIR__ . '/config.sqlite.php';
 
-if (file_exists($configPath)) {
-    require_once $configPath;
+if (file_exists($mysqlConfig)) {
+    require_once $mysqlConfig;
+} elseif (file_exists($sqliteConfig)) {
+    // Fallback para SQLite se o config.php não existir
+    require_once $sqliteConfig;
 } else {
-    // Fallback para SQLite se o config.php não existir (útil para dev local rápido)
-    require_once __DIR__ . '/config.sqlite.php';
+    // Se nenhum existir, não damos erro fatal aqui para permitir que o sistema mostre o erro de conexão depois
+    // ou podemos definir um estado de erro.
+    if (!defined('DB_TYPE')) define('DB_TYPE', 'none');
 }
 
 /**
  * Retorna informações sobre a conexão atual para o indicador visual
  */
 function getDbStatus() {
-    return [
-        'type' => defined('DB_TYPE') ? DB_TYPE : 'unknown',
-        'name' => defined('DB_NAME') ? DB_NAME : 'N/A',
-        'label' => (defined('DB_TYPE') && DB_TYPE === 'mysql') ? 'MySQL (Produção)' : 'SQLite (Local)',
-        'color' => (defined('DB_TYPE') && DB_TYPE === 'mysql') ? 'bg-green-500' : 'bg-orange-500'
-    ];
+    $type = defined('DB_TYPE') ? DB_TYPE : 'none';
+    
+    if ($type === 'mysql') {
+        return [
+            'type' => 'mysql',
+            'name' => defined('DB_NAME') ? DB_NAME : 'N/A',
+            'label' => 'MySQL (Produção)',
+            'color' => 'bg-green-500'
+        ];
+    } elseif ($type === 'sqlite') {
+        return [
+            'type' => 'sqlite',
+            'name' => defined('DB_NAME') ? DB_NAME : 'N/A',
+            'label' => 'SQLite (Local)',
+            'color' => 'bg-orange-500'
+        ];
+    } else {
+        return [
+            'type' => 'none',
+            'name' => 'Faltando Config',
+            'label' => 'Configuração Pendente',
+            'color' => 'bg-red-500'
+        ];
+    }
 }
