@@ -37,6 +37,14 @@ try {
             'options' => $options
         ];
     }
+
+    // Buscar imagens dos capítulos (categorias) para o resultado do quiz
+    $stmtChapters = $pdo->query("SELECT id, image_url FROM chapters");
+    $chaptersData = $stmtChapters->fetchAll(PDO::FETCH_ASSOC);
+    $categoryImages = [];
+    foreach ($chaptersData as $chap) {
+        $categoryImages[$chap['id']] = $chap['image_url'];
+    }
 } catch (Exception $e) {
     // Fallback data
     $plans = [
@@ -183,6 +191,7 @@ const quizQuestions = <?= json_encode($quizQuestions) ?>;
 const plansData = <?= json_encode($plans) ?>;
 const planImages = <?= json_encode($planImages) ?>;
 const planBadges = <?= json_encode($planBadges) ?>;
+const categoryImages = <?= json_encode($categoryImages) ?>;
 
 let currentStep = 0;
 let answers = {};
@@ -369,7 +378,13 @@ function showImpactfulResult() {
     document.getElementById('quiz-lead-form').classList.add('hidden');
     
     const plan = calculatedPlan;
-    const planImage = planImages[plan.id] || planImages['A'];
+    
+    // Pegar a imagem da categoria escolhida (primeira pergunta, index 0)
+    const chosenCategoryId = answers[0] ? answers[0].id : null;
+    const categoryImage = chosenCategoryId ? categoryImages[chosenCategoryId] : null;
+    
+    // Prioriza a imagem da categoria, senão usa a do plano
+    const planImage = categoryImage || planImages[plan.id] || planImages['A'];
     const badge = planBadges[plan.id] || { icon: '✨', label: 'Recomendado' };
     
     const resultContainer = document.getElementById('quiz-result');
