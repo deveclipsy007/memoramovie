@@ -1,18 +1,18 @@
 # Configuração para Hostinger (React + PHP API)
 
-# 1. Redirecionar todas as rotas para o index.html (SPA)
+# 1. Redirecionar todas as rotas para o index.php (Roteador PHP)
 # Exceto arquivos reais e chamadas para /api
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
   
-  # Ignorar a pasta /api do roteamento do React
+  # Ignorar a pasta /api do roteamento (ela tem seu próprio .htaccess)
   RewriteRule ^api/ - [L]
 
-  # Se o arquivo/diretório solicitado não existir, manda para o index.html
+  # Se o arquivo/diretório solicitado não existir, manda para o index.php
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule . /index.php [L]
 </IfModule>
 
 # 2. Segurança Básica
