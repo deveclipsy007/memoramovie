@@ -68,6 +68,10 @@ ob_start();
                     <label class="block text-sm font-medium text-gray-700 mb-1">Tempo de Entrega</label>
                     <input type="text" id="plan-delivery" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Link de Checkout</label>
+                    <input type="text" id="plan-checkout" placeholder="https://..." class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
                 <div class="flex gap-3 pt-4">
                     <button type="button" onclick="closeModal()" class="flex-1 py-2 border border-gray-300 rounded-lg">Cancelar</button>
                     <button type="submit" class="flex-1 py-2 bg-memora-wine text-white rounded-lg">Salvar</button>
@@ -92,6 +96,7 @@ function editPlan(id) {
     document.getElementById('plan-duration').value = p.duration || '';
     document.getElementById('plan-description').value = p.description || '';
     document.getElementById('plan-delivery').value = p.delivery_time || '';
+    document.getElementById('plan-checkout').value = p.checkout_link || '';
     document.getElementById('plan-modal').classList.remove('hidden');
 }
 
@@ -102,7 +107,8 @@ async function savePlan(e) {
         price: parseFloat(document.getElementById('plan-price').value),
         duration: document.getElementById('plan-duration').value,
         description: document.getElementById('plan-description').value,
-        delivery_time: document.getElementById('plan-delivery').value
+        delivery_time: document.getElementById('plan-delivery').value,
+        checkout_link: document.getElementById('plan-checkout').value
     };
 
     try {

@@ -53,14 +53,15 @@ class PlanController {
         }
 
         try {
-            $stmt = $this->db->prepare("INSERT INTO plans (id, name, price, duration, description, delivery_time) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $this->db->prepare("INSERT INTO plans (id, name, price, duration, description, delivery_time, checkout_link) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $stmt->execute([
                 $input['id'],
                 $input['name'],
                 $input['price'],
                 $input['duration'] ?? '',
                 $input['description'] ?? '',
-                $input['delivery_time'] ?? ''
+                $input['delivery_time'] ?? '',
+                $input['checkout_link'] ?? ''
             ]);
 
             jsonResponse(true, ['message' => 'Plano criado'], null, 201);
@@ -79,7 +80,7 @@ class PlanController {
             $fields = [];
             $values = [];
 
-            $allowedFields = ['name', 'price', 'duration', 'description', 'delivery_time'];
+            $allowedFields = ['name', 'price', 'duration', 'description', 'delivery_time', 'checkout_link'];
             foreach ($allowedFields as $field) {
                 if (isset($input[$field])) {
                     $fields[] = "$field = ?";

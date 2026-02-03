@@ -474,9 +474,9 @@ function showImpactfulResult() {
                     
                     <!-- CTAs -->
                     <div class="space-y-4">
-                        <a href="/criar?plan=${plan.id}&name=${encodeURIComponent(leadData.name)}&email=${encodeURIComponent(leadData.email)}" 
+                        <a href="${plan.checkout_link || `/criar?plan=${plan.id}&name=${encodeURIComponent(leadData.name)}&email=${encodeURIComponent(leadData.email)}`}" 
                            class="block w-full py-5 text-center text-lg font-medium tracking-wider uppercase transition-all duration-300 bg-gradient-to-r from-memora-wine to-memora-wineLight text-white hover:shadow-xl hover:shadow-memora-wine/30 rounded-lg">
-                            Quero Esse Plano! 🎬
+                            ${plan.checkout_link ? 'Reservar' : 'Quero Esse Plano! 🎬'}
                         </a>
                         <button onclick="resetQuiz()" 
                                 class="block w-full py-4 text-center text-sm font-medium tracking-widest uppercase transition-all duration-300 border-2 border-memora-wine/20 text-memora-wine hover:bg-memora-wine hover:text-white rounded-lg">
