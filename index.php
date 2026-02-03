@@ -38,6 +38,7 @@ $adminRoutes = [
     '/admin/site/faqs'    => 'views/admin/site-faqs.php',
     '/admin/site/reviews' => 'views/admin/site-reviews.php',
     '/admin/site/plans'   => 'views/admin/site-plans.php',
+    '/admin/site/directors-cut' => 'views/admin/site-directors-cut.php',
     '/admin/settings'     => 'views/admin/settings.php',
 ];
 

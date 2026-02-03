@@ -7,6 +7,14 @@
 // Buscar capítulos do banco para usar as imagens das categorias
 try {
     require_once __DIR__ . '/../../../api/db.php';
+    $stmt = $pdo->query("SELECT * FROM site_content WHERE section = 'hero'");
+    $rows = $stmt->fetchAll();
+    
+    $heroContent = [];
+    foreach ($rows as $row) {
+        $heroContent[$row['id']] = $row['value'];
+    }
+
     $stmt = $pdo->query("SELECT image_url FROM chapters WHERE image_url IS NOT NULL AND image_url != '' ORDER BY display_order");
     $chaptersWithImages = $stmt->fetchAll();
     
@@ -58,21 +66,18 @@ $pressBrands = ['VOGUE', 'GQ', 'ARCHDIGEST', 'Kinfolk', 'Cereal'];
             </div>
 
             <h1 class="font-serif text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-memora-wine leading-[0.95] mb-6 md:mb-8">
-                Sua história. <br class="hidden sm:block">
-                <span class="italic font-light opacity-80">Como um filme.</span>
+                <?= $heroContent['hero_title'] ?? 'Sua história. <br class="hidden sm:block"><span class="italic font-light opacity-80">Como um filme.</span>' ?>
             </h1>
 
             <p class="text-memora-black/70 text-lg md:text-xl leading-relaxed mb-10 max-w-md mx-auto lg:mx-0 font-light">
-                Transformamos seus momentos em filmes com alma de cinema. <br>
-                Para emocionar. Para presentear. <br>
-                <span class="font-medium text-memora-wine">Para nunca esquecer.</span>
+                <?= nl2br(htmlspecialchars($heroContent['hero_subtitle'] ?? "Transformamos seus momentos em filmes com alma de cinema.\nPara emocionar. Para presentear.\nPara nunca esquecer.")) ?>
             </p>
 
             <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <a href="/criar" class="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-widest uppercase transition-all duration-300 bg-memora-wine text-white hover:bg-memora-wineLight shadow-lg shadow-memora-wine/20 w-full sm:w-auto rounded-lg">
-                    Eternizar meu Momento
+                    <?= htmlspecialchars($heroContent['hero_cta_text'] ?? 'Eternizar meu Momento') ?>
                 </a>
-                <button onclick="openVideoModal('https://www.youtube.com/embed/tfjtbAAuAUA')" class="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-widest uppercase transition-all duração-300 bg-transparent text-memora-wine border border-memora-wine hover:bg-memora-wine hover:text-white w-full sm:w-auto rounded-lg">
+                <button onclick="openVideoModal('<?= $heroContent['hero_video_url'] ?? 'https://www.youtube.com/embed/tfjtbAAuAUA' ?>')" class="inline-flex items-center justify-center px-8 py-3 text-sm font-medium tracking-widest uppercase transition-all duração-300 bg-transparent text-memora-wine border border-memora-wine hover:bg-memora-wine hover:text-white w-full sm:w-auto rounded-lg">
                     Assistir Exemplo
                 </button>
             </div>
@@ -83,7 +88,7 @@ $pressBrands = ['VOGUE', 'GQ', 'ARCHDIGEST', 'Kinfolk', 'Cereal'];
             
             <!-- The Cinematic Frame with Carousel -->
             <div id="hero-frame" 
-                 onclick="openVideoModal('https://www.youtube.com/embed/tfjtbAAuAUA')"
+                 onclick="openVideoModal('<?= $heroContent['hero_video_url'] ?? 'https://www.youtube.com/embed/tfjtbAAuAUA' ?>')"
                  class="relative w-full max-w-sm lg:max-w-lg aspect-[4/5] bg-memora-black overflow-hidden shadow-2xl cursor-pointer group rounded-sm animate-clip-reveal">
                 
                 <!-- Frame Markers -->

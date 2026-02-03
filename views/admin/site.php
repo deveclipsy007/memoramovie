@@ -9,6 +9,7 @@ $pageHeading = 'Gerenciar Site';
 
 $siteLinks = [
     ['href' => '/admin/site/hero', 'title' => 'Hero', 'description' => 'Título, subtítulo e vídeo da seção principal', 'icon' => 'layout'],
+    ['href' => '/admin/site/directors-cut', 'title' => 'Director\'s Cut', 'description' => 'Qualidade e vídeo da seção cinematográfica', 'icon' => 'video'],
     ['href' => '/admin/site/faqs', 'title' => 'FAQs', 'description' => 'Perguntas frequentes', 'icon' => 'help'],
     ['href' => '/admin/site/reviews', 'title' => 'Depoimentos', 'description' => 'Reviews e testimonials', 'icon' => 'star'],
     ['href' => '/admin/site/plans', 'title' => 'Planos', 'description' => 'Preços e pacotes', 'icon' => 'tag'],
@@ -27,6 +28,9 @@ ob_start();
                         <?php if ($link['icon'] === 'layout'): ?>
                             <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
                             <line x1="3" x2="21" y1="9" y2="9"/>
+                        <?php elseif ($link['icon'] === 'video'): ?>
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>
+                            <path d="m15 10 4.55-2.27A1 1 0 0 1 21 8.61v6.78a1 1 0 0 1-1.45.89L15 14"/>
                         <?php elseif ($link['icon'] === 'help'): ?>
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>

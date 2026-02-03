@@ -4,6 +4,19 @@
  * Seção sobre qualidade cinematográfica
  */
 
+try {
+    require_once __DIR__ . '/../../../api/db.php';
+    $stmt = $pdo->query("SELECT * FROM site_content WHERE section = 'directors-cut'");
+    $rows = $stmt->fetchAll();
+    
+    $dcContent = [];
+    foreach ($rows as $row) {
+        $dcContent[$row['id']] = $row['value'];
+    }
+} catch (Exception $e) {
+    $dcContent = [];
+}
+
 $features = [
     [
         'title' => 'Color Grading',
@@ -36,13 +49,11 @@ $features = [
                 </div>
                 
                 <h2 class="font-serif text-4xl md:text-5xl text-white mb-6 leading-tight">
-                    Não é edição. <br>
-                    <span class="italic text-white/80">É direção de arte.</span>
+                    <?= $dcContent['dc_title'] ?? 'Não é edição. <br><span class="italic text-white/80">É direção de arte.</span>' ?>
                 </h2>
                 
                 <p class="text-white/60 text-lg mb-10 leading-relaxed">
-                    Cada filme Memora passa por um processo de pós-produção digno de cinema. 
-                    Nossos editores são diretores criativos que tratam cada projeto como uma obra única.
+                    <?= htmlspecialchars($dcContent['dc_description'] ?? 'Cada filme Memora passa por um processo de pós-produção digno de cinema. Nossos editores são diretores criativos que tratam cada projeto como uma obra única.') ?>
                 </p>
                 
                 <!-- Features -->
@@ -72,7 +83,7 @@ $features = [
                     
                     <!-- Play button overlay -->
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <button onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ')" 
+                        <button onclick="openVideoModal('<?= $dcContent['directors_cut_video_url'] ?? 'https://www.youtube.com/embed/tfjtbAAuAUA' ?>')" 
                                 class="w-20 h-20 rounded-full bg-white/10 backdrop-blur-sm border border-white/30 flex items-center justify-center hover:bg-white/20 transition-colors">
                             <svg class="w-8 h-8 text-white fill-current ml-1" viewBox="0 0 24 24">
                                 <polygon points="5 3 19 12 5 21 5 3"/>
