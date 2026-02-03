@@ -15,8 +15,8 @@ try {
         echo "<tr style='background: $color;'>";
         echo "<td>" . $row['id'] . "</td>";
         echo "<td>" . $row['level'] . "</td>";
-        echo "<td>" . htmlspecialchars($row['event_name']) . "</td>";
-        echo "<td><pre style='margin:0; font-size: 11px;'>" . htmlspecialchars(substr($row['details'], 0, 300)) . "</pre></td>";
+        echo "<td>" . htmlspecialchars($row['message']) . "</td>";
+        echo "<td><pre style='margin:0; font-size: 11px;'>" . htmlspecialchars(substr($row['context'] ?? '', 0, 300)) . "</pre></td>";
         echo "<td>" . $row['created_at'] . "</td>";
         echo "</tr>";
     }

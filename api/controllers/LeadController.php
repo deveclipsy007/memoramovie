@@ -113,15 +113,16 @@ class LeadController {
 
             logEvent($this->db, 'success', 'Novo lead cadastrado', 'ID: ' . $leadId . ' | Email: ' . ($input['email'] ?? 'N/A') . ' | Plano: ' . ($input['plan_selected'] ?? 'N/A'));
 
+            // Disparar automação (AI + Email)
+            // IMPORTANTE: Fazer isso ANTES do jsonResponse pois ele encerra o script com exit;
+            if (!empty($input['email'])) {
+                $this->processAutomation($leadId, $input['name'] ?? 'Cliente', $input['email'], $input['plan_selected'] ?? '');
+            }
+
             jsonResponse(true, [
                 'message' => 'Lead criado com sucesso',
                 'id' => $leadId
             ], null, 201);
-            
-            // Disparar automação (AI + Email) - Idealmente seria assíncrono, mas faremos síncrono por simplicidade
-            if (!empty($input['email'])) {
-                $this->processAutomation($leadId, $input['name'] ?? 'Cliente', $input['email'], $input['plan_selected'] ?? '');
-            }
         } catch (PDOException $e) {
             logEvent($this->db, 'error', 'Erro ao criar lead', $e->getMessage());
             jsonResponse(false, null, 'Erro ao criar lead: ' . $e->getMessage(), 500);
