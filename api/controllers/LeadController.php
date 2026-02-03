@@ -117,9 +117,54 @@ class LeadController {
                 'message' => 'Lead criado com sucesso',
                 'id' => $leadId
             ], null, 201);
+            
+            // Disparar automação (AI + Email) - Idealmente seria assíncrono, mas faremos síncrono por simplicidade
+            if (!empty($input['email'])) {
+                $this->processAutomation($leadId, $input['name'] ?? 'Cliente', $input['email'], $input['plan_selected'] ?? '');
+            }
         } catch (PDOException $e) {
             logEvent($this->db, 'error', 'Erro ao criar lead', $e->getMessage());
             jsonResponse(false, null, 'Erro ao criar lead: ' . $e->getMessage(), 500);
+        }
+    }
+    
+    // Método auxiliar para processar automação (pode ser movido para job queue no futuro)
+    private function processAutomation($leadId, $name, $email, $planId) {
+        require_once __DIR__ . '/../services/AIService.php';
+        require_once __DIR__ . '/../services/SimpleSMTP.php';
+        
+        try {
+            // 1. Gerar mensagem personalizada (AI)
+            $planNames = [
+                'A' => 'Memora Capsule',
+                'B' => 'Memora Feature',
+                'C' => 'Memora Legacy'
+            ];
+            $planName = $planNames[$planId] ?? 'Memora Movie';
+            
+            $ai = new AIService();
+            $emailBody = $ai->generateWelcomeMessage($name, $planName);
+            
+            // 2. Atualizar lead com a mensagem gerada
+            $stmt = $this->db->prepare("UPDATE leads SET ai_message = ? WHERE id = ?");
+            $stmt->execute([$emailBody, $leadId]);
+            
+            // 3. Enviar e-mail (SMTP)
+            $smtp = new SimpleSMTP();
+            $subject = "Bem-vindo ao universo Memora Movie, $name";
+            $sent = $smtp->send($email, $subject, $emailBody);
+            
+            // 4. Atualizar status de envio
+            if ($sent) {
+                $stmt = $this->db->prepare("UPDATE leads SET email_sent = 1 WHERE id = ?");
+                $stmt->execute([$leadId]);
+                logEvent($this->db, 'success', 'Email enviado para lead', "ID: $leadId | Destino: $email");
+            } else {
+                logEvent($this->db, 'warning', 'Falha no envio de email', "ID: $leadId | Destino: $email");
+            }
+            
+        } catch (Exception $e) {
+            logEvent($this->db, 'error', 'Erro na automação do lead', $e->getMessage());
         }
     }
 
