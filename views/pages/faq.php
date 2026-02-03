@@ -24,7 +24,7 @@ ob_start();
         <div class="max-w-2xl mx-auto text-center">
             <h2 class="font-serif text-3xl text-memora-wine mb-6">Ainda precisa de ajuda?</h2>
             <p class="text-memora-black/60 mb-8">Nossa equipe está pronta para atender você.</p>
-            <a href="mailto:hello@memora.com" 
+            <a href="mailto:hello@memoramovie.com" 
                class="inline-flex items-center justify-center px-10 py-4 text-sm font-medium tracking-widest uppercase transition-all duration-300 bg-memora-wine text-white hover:bg-memora-wineLight">
                 Fale Conosco
             </a>

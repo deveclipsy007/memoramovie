@@ -37,7 +37,7 @@
                     </svg>
                 </a>
                 <!-- Email -->
-                <a href="mailto:hello@memora.com" class="opacity-60 hover:opacity-100 transition-opacity">
+                <a href="mailto:hello@memoramovie.com" class="opacity-60 hover:opacity-100 transition-opacity">
                     <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <rect width="20" height="16" x="2" y="4" rx="2"/>
                         <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
@@ -70,7 +70,7 @@
                         Privacidade & Segurança
                     </a>
                 </li>
-                <li><a href="mailto:hello@memora.com" class="hover:text-white transition-colors">hello@memora.com</a></li>
+                <li><a href="mailto:hello@memoramovie.com" class="hover:text-white transition-colors">hello@memoramovie.com</a></li>
             </ul>
         </div>
 
