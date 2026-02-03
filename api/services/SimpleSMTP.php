@@ -63,8 +63,15 @@ class SimpleSMTP {
 
     private function serverCmd($conn, $cmd) {
         fwrite($conn, $cmd . "\r\n");
-        $response = fgets($conn, 512);
-        // Pode adicionar verificação de código de resposta aqui se necessário (ex: 250, 235, etc)
-        return $response;
+        return $this->getResponse($conn);
+    }
+
+    private function getResponse($conn) {
+        $data = "";
+        while ($str = fgets($conn, 512)) {
+            $data .= $str;
+            if (substr($str, 3, 1) == " ") { break; }
+        }
+        return $data;
     }
 }
